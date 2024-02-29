@@ -13,8 +13,25 @@ export const usuariosGet = async (req = request, res = response) => {
     ]);
 
     res.status(200).json({
-        msg:"User ADDED",
+        msg: 'User ADDED',
         total,
         usuarios
     });
 }
+
+export const usuariosPost = async (req, res) => {
+    const {name, email, password} = req.body;
+    const usuario = new User({ name, email, password});
+
+    const salt = bcryptjs.genSaltSync();
+    usuario.password = bcryptjs.hashSync(password, salt);
+
+    await usuario.save();
+
+    res.status(200).json({
+        msg: 'User ADDED',
+        usuario
+    });
+}
+
+
