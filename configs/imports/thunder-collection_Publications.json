@@ -1,0 +1,104 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Publications",
+    "dateExported": "2024-03-01T05:49:56.808Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "b5d56ef0-b968-4099-bb9e-90b9090d2014",
+            "colId": "f02b353a-6476-4a2d-a32f-7434f4fe39ce",
+            "containerId": "",
+            "name": "POST Publications",
+            "url": "localhost:3000/api/publications",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-01T04:31:42.503Z",
+            "modified": "2024-03-01T05:21:52.818Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUxMjUwNDYwYzEwMTg5NzVmMDE3ODQiLCJpYXQiOjE3MDkyNjc3OTIsImV4cCI6MTcwOTI3MTM5Mn0.myZwtIeXte41u7E-sa_-lGHOJNORRMUDbZqQr1PBd4o"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"idUser\": \"65e1250460c1018975f01784\",\n  \"title\": \"Publicacion 3\",\n  \"category\": \"NOTICIA\",\n  \"description\": \"Mi primer publicacion 3\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "1cf65928-f243-42b7-a49e-088346ef3ff9",
+            "colId": "f02b353a-6476-4a2d-a32f-7434f4fe39ce",
+            "containerId": "",
+            "name": "GET Publications",
+            "url": "localhost:3000/api/publications",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-01T04:43:04.998Z",
+            "modified": "2024-03-01T04:44:06.591Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f73a1b8a-bab1-4773-b32a-c7be20e6a6c6",
+            "colId": "f02b353a-6476-4a2d-a32f-7434f4fe39ce",
+            "containerId": "",
+            "name": "GETById Publications",
+            "url": "localhost:3000/api/publications/65e15cc20cba9dc465751816",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-03-01T04:45:17.615Z",
+            "modified": "2024-03-01T05:07:35.395Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "360ac3fe-0717-4a48-8864-9594b93b8f34",
+            "colId": "f02b353a-6476-4a2d-a32f-7434f4fe39ce",
+            "containerId": "",
+            "name": "PUT Publications",
+            "url": "localhost:3000/api/publications/65e165f1e6eb0b7f1336b8af",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-03-01T04:54:17.831Z",
+            "modified": "2024-03-01T05:37:46.526Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUxMjUwNDYwYzEwMTg5NzVmMDE3ODQiLCJpYXQiOjE3MDkyNzE0NDcsImV4cCI6MTcwOTI3NTA0N30.CTAdFMbua3yF2TOcpWDAeTzoc-FmLfnWiODZG4pBQf0"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"Publicacion Actualizada\",\n  \"category\": \"MEME\",\n  \"description\": \"Publicacion upd\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4f6f7084-a83d-445f-b024-428d815a03ef",
+            "colId": "f02b353a-6476-4a2d-a32f-7434f4fe39ce",
+            "containerId": "",
+            "name": "DELETE Publications",
+            "url": "localhost:3000/api/publications/65e165f1e6eb0b7f1336b8af",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-03-01T05:12:24.920Z",
+            "modified": "2024-03-01T05:40:42.156Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUxMjUwNDYwYzEwMTg5NzVmMDE3ODQiLCJpYXQiOjE3MDkyNzE0NDcsImV4cCI6MTcwOTI3NTA0N30.CTAdFMbua3yF2TOcpWDAeTzoc-FmLfnWiODZG4pBQf0"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

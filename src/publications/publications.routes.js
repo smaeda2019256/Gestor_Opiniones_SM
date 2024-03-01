@@ -39,7 +39,7 @@ router.put('/:id', [
 
 router.delete('/:id', [
     check('id', 'El ID ingresado no es válido').isMongoId(),
-    //check('id').custom(publicationExistsById),
+    check('id').custom(publicationExistsById),
     check('id').custom(publicationBelongsToUser),
     validarJWT,
     validarCampos
