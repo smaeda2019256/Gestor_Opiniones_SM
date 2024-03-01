@@ -3,9 +3,6 @@ import Publication from './publications.model.js';
 import Usuario from '../users/user.model.js';
 
 
-import Publication from './models/Publication.js';
-
-
 export const createPublication = async (req = request, res = response) => {
     const { idUser, title, category, description } = req.body;
     try {
@@ -29,16 +26,12 @@ export const getPublications = async (req, res) => {
 
 
 export const getPublicationById = async (req, res) => {
-    const id = req.params.id;
-    try {
-        const publication = await Publication.findById(id);
-        if (!publication) {
-            return res.status(404).json({ error: 'Publicación no encontrada' });
-        }
-        res.json(publication);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener la publicación' });
-    }
+    const { id } = req.params;
+    const publications = await Publication.findOne({ _id: id });
+
+    res.status(200).json({
+        publications
+    })
 };
 
 

@@ -12,16 +12,15 @@ import { publicationExistsById, publicationBelongsToUser } from '../helpers/db-v
 
 const router = express.Router();
 
-router.get('/publications', getPublications);
+router.get('/', getPublications);
 
-router.get('/publications/:id', [
+router.get('/:id', [
     check('id', 'El ID ingresado no es válido').isMongoId(),
     check('id').custom(publicationExistsById),
-    check('id').custom(publicationBelongsToUser),
     validarCampos
 ], getPublicationById);
 
-router.post('/publications', [
+router.post('/', [
     check('title', 'El título es obligatorio').not().isEmpty(),
     check('category', 'La categoría es obligatoria').not().isEmpty(),
     check('description', 'La descripción es obligatoria').not().isEmpty(),
@@ -29,7 +28,7 @@ router.post('/publications', [
     validarCampos
 ], createPublication);
 
-router.put('/publications/:id', [
+router.put('/:id', [
     check('id', 'El ID ingresado no es válido').isMongoId(),
     check('id').custom(publicationExistsById),
     check('id').custom(publicationBelongsToUser), 
@@ -38,9 +37,9 @@ router.put('/publications/:id', [
 ], updatePublication);
 
 
-router.delete('/publications/:id', [
+router.delete('/:id', [
     check('id', 'El ID ingresado no es válido').isMongoId(),
-    check('id').custom(publicationExistsById),
+    //check('id').custom(publicationExistsById),
     check('id').custom(publicationBelongsToUser),
     validarJWT,
     validarCampos

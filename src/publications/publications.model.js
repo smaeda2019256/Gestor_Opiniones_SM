@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const PublicationSchema = mongoose.Schema({
     idUser: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: [true, "The User is obligatory"],
     },
