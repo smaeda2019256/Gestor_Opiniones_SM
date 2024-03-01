@@ -7,7 +7,7 @@ const CommentsSchema = mongoose.Schema({
         ref: "User",
         required: [true, "The User is obligatory"],
     },
-    idPublicaction: {
+    idPublication: {
         type: String,
         ref: "Publications",
         required: [true, "The publicaction is obligatory"],

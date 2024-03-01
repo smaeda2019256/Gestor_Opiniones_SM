@@ -5,17 +5,17 @@ import jwt from 'jsonwebtoken';
 
 export const commentsPost = async (req, res) => {
     const user = req.usuario;
-    const {descriptionComent} = req.body;
+    const {descriptionComment} = req.body;
 
     try{
-        if (!descriptionComent) {
+        if (!descriptionComment) {
             return res.status(400).json({
                 msg: 'Please, The description of the comments is required'
             });
         }
 
         const comment = new Comment({
-            descriptionComent,
+            descriptionComment,
             idUser: user.email,
             idPublication: req.idPublication, 
         });

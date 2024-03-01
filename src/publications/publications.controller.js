@@ -29,7 +29,7 @@ export const createPublication = async (req, res) => {
             title,
             category,
             description,
-            idUser: user.email,
+            idUser: user.name,
         });
 
         await publication.save();
