@@ -43,5 +43,34 @@ export const usuariosPost = async (req, res) => {
     });
 }
 
+export const usuariosPut = async(req, res) => {
+    const { id } = req.params;
+    const { _id, password, email, ...resto } = req.body;
+
+    try {
+        const usuario = await User.findById(id);
+        if (!usuario) {
+            return res.status(404).json({ msg: 'User NOT FOUND' });
+        }
+
+        if (usuario.email !== email) {
+            return res.status(400).json({ msg: 'The current email does not match well with the one already registered.' });
+        }
+
+        await User.findByIdAndUpdate(id, resto, { new: true });
+
+        res.status(200).json({
+            msg: 'User has been successfully UPDATED',
+            id
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'User error update'
+        });
+    }
+};
+
 
 
