@@ -35,12 +35,12 @@ export const createPublication = async (req, res) => {
         await publication.save();
 
         res.status(200).json({
-            msg: 'Publication added successfully',
+            msg: 'Publication ADDED successfully',
             publication
         });
     } catch (error) {
-        console.error('Error creating publication:', error);
-        res.status(500).json({ error: 'Error creating publication' });
+        console.error('ERROR - creating publication:', error);
+        res.status(500).json({ error: 'ERROR - creating publication' });
     }
 };
 
@@ -62,23 +62,23 @@ export const updatePublication = async (req, res) => {
     try {
         const token = req.header("x-token");
         if (!token) {
-            return res.status(401).json({ msg: "There is no token in the request" });
+            return res.status(401).json({ msg: "There is NO TOKEN in the request" });
         }
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const usuario = await Usuario.findById(uid);
         if (!usuario) {
-            return res.status(401).json({ msg: 'User does not exist in the database' });
+            return res.status(401).json({ msg: 'User does NOT EXIST in the database' });
         }
 
         await Publication.findByIdAndUpdate(id, resto);
 
         const publications = await Publication.findOne({ _id: id });
 
-        res.status(200).json({ msg: 'Updated Publication', publications });
+        res.status(200).json({ msg: 'UPDATED Publication successfully', publications });
     } catch (error) {
-        console.error('Error updating publication:', error);
-        res.status(500).json({ error: 'Error updating publication' });
+        console.error('ERROR - updating publication:', error);
+        res.status(500).json({ error: 'ERROR - updating publication' });
     }
 };
 
@@ -89,21 +89,21 @@ export const publicationsDelete = async (req, res) => {
     try {
         const token = req.header("x-token");
         if (!token) {
-            return res.status(401).json({ msg: "There is no token in the request" });
+            return res.status(401).json({ msg: "There is NO TOKEN in the request" });
         }
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const usuario = await Usuario.findById(uid);
         if (!usuario) {
-            return res.status(401).json({ msg: 'User does not exist in the database' });
+            return res.status(401).json({ msg: 'User does NOT EXIST in the database' });
         }
 
         const publication = await Publication.findByIdAndUpdate(id, { estado: false });
         if (!publication) {
-            return res.status(404).json({ msg: 'Publication not found' });
+            return res.status(404).json({ msg: 'Publication NOT FOUND' });
         }
 
-        res.status(200).json({ msg: 'Publication deleted successfully', publication, usuario });
+        res.status(200).json({ msg: 'Publication DELETED successfully', publication, usuario });
     } catch (error) {
         console.error('Error deleting publication:', error);
         res.status(500).json({ error: 'Error deleting publication' });
