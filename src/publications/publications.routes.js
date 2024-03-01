@@ -5,44 +5,41 @@ import {
     getPublicationById, 
     createPublication, 
     updatePublication, 
-    deletePublication } from './publications.controller.js';
+    publicationsDelete } from './publications.controller.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
 import { validarCampos } from '../middlewares/validarCampos.js';
-import { publicationExistsById, publicationBelongsToUser } from '../helpers/db-validator.js';
+import { publicationExistsById } from '../helpers/db-validator.js';
 
 const router = express.Router();
 
 router.get('/', getPublications);
 
 router.get('/:id', [
-    check('id', 'El ID ingresado no es válido').isMongoId(),
+    check('id', 'The entered ID is invalid').isMongoId(),
     check('id').custom(publicationExistsById),
     validarCampos
 ], getPublicationById);
 
 router.post('/', [
-    check('title', 'El título es obligatorio').not().isEmpty(),
-    check('category', 'La categoría es obligatoria').not().isEmpty(),
-    check('description', 'La descripción es obligatoria').not().isEmpty(),
+    check('title', 'The title is obligatory').not().isEmpty(),
+    check('category', 'The category is obligatory').not().isEmpty(),
+    check('description', 'The description is obligatory').not().isEmpty(),
     validarJWT,
     validarCampos
 ], createPublication);
 
 router.put('/:id', [
-    check('id', 'El ID ingresado no es válido').isMongoId(),
+    check('id', 'The entered ID is invalid').isMongoId(),
     check('id').custom(publicationExistsById),
-    check('id').custom(publicationBelongsToUser), 
     validarJWT,
     validarCampos
 ], updatePublication);
 
 
 router.delete('/:id', [
-    check('id', 'El ID ingresado no es válido').isMongoId(),
+    check('id', 'The entered ID is invalid').isMongoId(),
     check('id').custom(publicationExistsById),
-    check('id').custom(publicationBelongsToUser),
-    validarJWT,
     validarCampos
-], deletePublication);
+], publicationsDelete);
 
 export default router;

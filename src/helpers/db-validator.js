@@ -21,10 +21,3 @@ export const publicationExistsById = async (id = '') => {
         throw new Error('The publication was not found');
     }
 };
-
-export const publicationBelongsToUser = async (publicationId, userId) => {
-    const publication = await Publications.findOne({ _id: publicationId, idUser: userId  });
-    if (!publication) {
-        throw new Error('he publication does not belong to the user');
-    }
-};

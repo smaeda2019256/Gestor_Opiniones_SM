@@ -1,6 +1,7 @@
 import { response, request } from "express";
 import Publication from './publications.model.js';
 import Usuario from '../users/user.model.js';
+import jwt from "jsonwebtoken";
 
 
 export const createPublication = async (req = request, res = response) => {
@@ -35,41 +36,57 @@ export const getPublicationById = async (req, res) => {
 };
 
 
-export const updatePublication = async (req, res) => {
-    const id = req.params.id;
-    const { title, category, description } = req.body;
+export const updatePublication = async(req, res) => {
+    const { id } = req.params;
+    const { _id, ...resto } = req.body;
+
     try {
-        const publication = await Publication.findById(id);
-        if (!publication) {
-            return res.status(404).json({ error: 'Publicación no encontrada' });
+        const token = req.header("x-token");
+        if (!token) {
+            return res.status(401).json({ msg: "There is no token in the request" });
         }
-        if (publication.idUser !== req.user.id) {
-            return res.status(403).json({ error: 'No tienes permiso para actualizar esta publicación' });
+
+        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const usuario = await Usuario.findById(uid);
+        if (!usuario) {
+            return res.status(401).json({ msg: 'User does not exist in the database' });
         }
-        publication.title = title;
-        publication.category = category;
-        publication.description = description;
-        await publication.save();
-        res.json(publication);
+
+        await Publication.findByIdAndUpdate(id, resto);
+
+        const publications = await Publication.findOne({ _id: id });
+
+        res.status(200).json({ msg: 'Updated Publication', publications });
     } catch (error) {
-        res.status(500).json({ error: 'Error al actualizar la publicación' });
+        console.error('Error updating publication:', error);
+        res.status(500).json({ error: 'Error updating publication' });
     }
 };
 
 
-export const deletePublication = async (req, res) => {
-    const id = req.params.id;
+export const publicationsDelete = async(req, res) => {
+    const { id } = req.params;
+
     try {
-        const publication = await Publication.findById(id);
+        const token = req.header("x-token");
+        if (!token) {
+            return res.status(401).json({ msg: "There is no token in the request" });
+        }
+
+        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const usuario = await Usuario.findById(uid);
+        if (!usuario) {
+            return res.status(401).json({ msg: 'User does not exist in the database' });
+        }
+
+        const publication = await Publication.findByIdAndUpdate(id, { estado: false });
         if (!publication) {
-            return res.status(404).json({ error: 'Publicación no encontrada' });
+            return res.status(404).json({ msg: 'Publication not found' });
         }
-        if (publication.idUser !== req.user.id) {
-            return res.status(403).json({ error: 'No tienes permiso para eliminar esta publicación' });
-        }
-        await publication.remove();
-        res.status(204).end();
+
+        res.status(200).json({ msg: 'Publication deleted successfully', publication, usuario });
     } catch (error) {
-        res.status(500).json({ error: 'Error al eliminar la publicación' });
+        console.error('Error deleting publication:', error);
+        res.status(500).json({ error: 'Error deleting publication' });
     }
 };
