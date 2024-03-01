@@ -1,4 +1,5 @@
 import User from '../users/user.model.js';
+import Publications from '../publications/publications.model.js';
 
 export const existeUsuarioById = async (id ='') => {
     const existeUsuario = await User.findById(id);
@@ -11,5 +12,20 @@ export const existenteEmail = async (email = '') => {
     const existeEmail = await User.findOne({email});
     if(existeEmail) {
         throw new Error(`The Email: ${email} has already been REGISTERED in the database`)
+    }
+};
+
+export const publicationExistsById = async (id) => {
+    const publication = await Publications.findById(id);
+    if (!publication) {
+        throw new Error(`The ID: ${title} Does not exist`);
+    }
+};
+
+
+export const publicationBelongsToUser = async (publicationId, idUser) => {
+    const publication = await Publications.findOne({ _id: publicationId, createdBy: idUser });
+    if (!publication) {
+        throw new Error(`The ID: ${idUser} Does not exist`);
     }
 };
