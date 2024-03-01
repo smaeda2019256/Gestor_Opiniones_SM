@@ -1,0 +1,61 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Users",
+    "dateExported": "2024-03-01T01:18:37.227Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "738cfe42-a6a5-4b6d-af40-740018d343c2",
+            "colId": "c25702ce-2b14-4928-beb6-b1a58a60ba04",
+            "containerId": "",
+            "name": "POST Users",
+            "url": "localhost:3000/api/user",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-01T00:31:40.473Z",
+            "modified": "2024-03-01T00:45:14.515Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Santiago Estrada\",\n  \"email\": \"sestrada@gmail.com\",\n  \"password\": \"123456\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "051ef510-3dd6-45dd-a467-6ce6ddc39d70",
+            "colId": "c25702ce-2b14-4928-beb6-b1a58a60ba04",
+            "containerId": "",
+            "name": "GET Users",
+            "url": "localhost:3000/api/user",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-01T00:45:27.275Z",
+            "modified": "2024-03-01T00:45:42.567Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b548dc4e-8dd2-4eb2-915f-ba21a1d6c4ea",
+            "colId": "c25702ce-2b14-4928-beb6-b1a58a60ba04",
+            "containerId": "",
+            "name": "PUT Users",
+            "url": "localhost:3000/api/user/65e1251a60c1018975f01787",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-03-01T00:56:34.195Z",
+            "modified": "2024-03-01T01:14:32.697Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Pedro Estrada\",\n  \"email\": \"sestrada@gmail.com\",\n  \"password\": \"12345678\",\n  \"newPassword\": \"123456789\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

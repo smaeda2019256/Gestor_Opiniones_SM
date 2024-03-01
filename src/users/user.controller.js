@@ -37,7 +37,7 @@ export const usuariosPost = async (req, res) => {
 
 export const usuariosPut = async(req, res) => {
     const { id } = req.params;
-    const { _id, password, email, ...resto } = req.body;
+    const { _id, password, newPassword, email,  ...resto } = req.body;
 
     try {
         const usuario = await User.findById(id);
@@ -64,7 +64,8 @@ export const usuariosPut = async(req, res) => {
 
         res.status(200).json({
             msg: 'User has been successfully UPDATED',
-            id
+            id,
+            email
         });
 
     } catch (error) {
