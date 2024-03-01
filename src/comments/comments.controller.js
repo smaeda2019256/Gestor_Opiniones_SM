@@ -48,3 +48,44 @@ export const commentsGet = async (req = request, res = response) => {
         comments
     });
 };
+
+export const commentsPut = async (req, res = response) => {
+    const {id} = req.params;
+    const {_id, ...resto} = req.body;
+
+    try {
+        const token = req.header("x-token");
+        if(!token){
+            return res.status(401).json({
+                msg: "There is NOT token in the request"});
+        }
+        
+        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const usuario =  await Usuario.findById(uid);
+        
+        if(!usuario){
+            return res.status(401).json({
+                msg: "The User does NOT EXIST in the DB"});
+        }
+
+        const comment = await Comment.findById(id);
+        if(!comment){
+            return res.status(404).json({
+                msg: "The Comment NOT FOUND"
+            });
+        }
+
+        await Comment.findByIdAndUpdate(id, resto);
+
+        const updatedComment = await Comment.findOne({_id: id});
+
+        res.status(200).json({
+            msg: "The Comment UPDATED successfully",
+            comment: updatedComment
+        });
+
+    }catch(error){
+        console.error('ERROR - Updating Comment: ', error);
+        res.status(400).json({error: 'ERROR - Updating Comment'});
+    }
+};
