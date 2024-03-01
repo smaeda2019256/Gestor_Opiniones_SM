@@ -2,10 +2,10 @@ import { response, request } from "express";
 import bcryptjs from "bcryptjs";
 import User from './user.model.js'
 
-export const usuariosGet = async (req = request, res = response) => {
-    const {limite, desde } = req.query;
-    const query = {estado: true};
-    const {total, usuarios} = await Promise.all([
+export const usuariosGet = async(req = request, res = response) => {
+    const { limite, desde } = req.query;
+    const query = { estado: true };
+    const [total, usuarios] = await Promise.all([
         User.countDocuments(query),
         User.find(query)
         .skip(Number(desde))
@@ -13,20 +13,12 @@ export const usuariosGet = async (req = request, res = response) => {
     ]);
 
     res.status(200).json({
-        msg: 'User ADDED',
+        msg: 'Added Users',
         total,
-        usuarios
+        usuarios,
     });
 }
 
-export const getUsuarioById = async (req, res) => {
-    const {id} = req.params;
-    const usuario = await User.findOne({_id: id});
-
-    res.status(200).json({
-        usuario
-    });
-}
 
 export const usuariosPost = async (req, res) => {
     const {name, email, password} = req.body;
