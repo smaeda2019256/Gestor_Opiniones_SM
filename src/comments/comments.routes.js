@@ -10,6 +10,7 @@ import {
 import {
     existeCommentsById,
 } from "../helpers/db-validator.js";
+import { validarJWTCMNT } from "../middlewares/validar-jwt.js";
 
 
 const router = Router();
@@ -19,6 +20,7 @@ router.get("/", commentsGet);
 router.post(
     "/:idPublication", [
         check("descriptionComment", "The description is obligatory").not().isEmpty(),
+        validarJWTCMNT,
         validarCampos,
     ],
     commentsPost
