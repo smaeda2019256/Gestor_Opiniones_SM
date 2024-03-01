@@ -15,9 +15,10 @@ export const existenteEmail = async (email = '') => {
     }
 };
 
-export const publicationExistsById = async (id = '') => {
-    const publication = await Publications.findById(id);
-    if (!publication) {
-        throw new Error('The publication was not found');
+export const publicationExistsById = async(id = '') => {
+    const existPublication = await Publications.findById(id);
+    if (!existPublication) {
+        throw new Error(`The ID: ${title} Does not exist`);
     }
-};
+}
+

@@ -3,40 +3,58 @@ import Publication from './publications.model.js';
 import Usuario from '../users/user.model.js';
 import jwt from "jsonwebtoken";
 
+export const getPublications = async (req = request, res = response) => {
+    const { limite, desde } = req.query;
+    const query = { estado: true };
+    const [total, publication] = await Promise.all([
+        Publication.countDocuments(query),
+        Publication.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ]);
 
-export const createPublication = async (req = request, res = response) => {
-    const { idUser, title, category, description } = req.body;
-    try {
-        const publication = new Publication({ idUser, title, category, description });
-        await publication.save();
-        res.status(201).json(publication);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al agregar la publicación' });
-    }
+    res.status(200).json({
+        total,
+        publication,
+    });
 };
 
+export const createPublication = async (req, res) => {
+    const user = req.usuario;
+    const { title, category, description } = req.body;
 
-export const getPublications = async (req, res) => {
     try {
-        const publications = await Publication.find();
-        res.json(publications);
+        const publication = new Publication({
+            title,
+            category,
+            description,
+            idUser: user.email,
+        });
+
+        await publication.save();
+
+        res.status(200).json({
+            msg: 'Publication added successfully',
+            publication
+        });
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener las publicaciones' });
+        console.error('Error creating publication:', error);
+        res.status(500).json({ error: 'Error creating publication' });
     }
 };
 
 
 export const getPublicationById = async (req, res) => {
     const { id } = req.params;
-    const publications = await Publication.findOne({ _id: id });
+    const publication = await Publication.findOne({ _id: id });
 
     res.status(200).json({
-        publications
+        publication
     })
 };
 
 
-export const updatePublication = async(req, res) => {
+export const updatePublication = async (req, res) => {
     const { id } = req.params;
     const { _id, ...resto } = req.body;
 
@@ -64,7 +82,7 @@ export const updatePublication = async(req, res) => {
 };
 
 
-export const publicationsDelete = async(req, res) => {
+export const publicationsDelete = async (req, res) => {
     const { id } = req.params;
 
     try {

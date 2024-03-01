@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const PublicationSchema = mongoose.Schema({
     idUser: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "User",
         required: [true, "The User is obligatory"],
     },
@@ -17,6 +17,10 @@ const PublicationSchema = mongoose.Schema({
     description: {
         type: String,
         required: [true, "The description is obligatory"],
+    },
+    estado: {
+        type: Boolean,
+        default: true,
     }
 });
 
