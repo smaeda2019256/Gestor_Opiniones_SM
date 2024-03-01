@@ -11,12 +11,12 @@ export const getPublications = async (req = request, res = response) => {
         Publication.find(query)
             .skip(Number(desde))
             .limit(Number(limite))
-            
+
     ]);
 
     res.status(200).json({
         total,
-        publication,
+        publication
     });
 };
 
