@@ -49,6 +49,17 @@ export const usuariosPut = async(req, res) => {
             return res.status(400).json({ msg: 'The current email does not match well with the one already registered.' });
         }
 
+        if (password && newPassword) {
+            const passwordCorrect = bcryptjs.compareSync(password, usuario.password);
+            if (!passwordCorrect) {
+                return res.status(400).json({ msg: 'The current password is incorrect' });
+            }
+            const salt = bcryptjs.genSaltSync();
+            resto.password = bcryptjs.hashSync(newPassword, salt);
+        } else if (password || newPassword) {
+            return res.status(400).json({ msg: 'Both the current password and the NEW password must be provided' });
+        }
+
         await User.findByIdAndUpdate(id, resto, { new: true });
 
         res.status(200).json({

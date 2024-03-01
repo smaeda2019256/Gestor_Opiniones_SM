@@ -37,6 +37,7 @@ router.put(
         check("id").custom(existeUsuarioById),
         check('email', 'The actual email is obligatory').isEmail(),
         check('password', 'The actual password is obligatory').not().isEmpty(),
+        check('newPassword', 'The new password is obligatory').not().isEmpty(),
         validarCampos,
     ],
     usuariosPut
