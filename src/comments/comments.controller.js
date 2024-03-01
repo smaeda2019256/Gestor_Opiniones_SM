@@ -85,7 +85,40 @@ export const commentsPut = async (req, res = response) => {
         });
 
     }catch(error){
-        console.error('ERROR - Updating Comment: ', error);
-        res.status(400).json({error: 'ERROR - Updating Comment'});
+        console.error("ERROR - Updating Comment: ", error);
+        res.status(400).json({error: "ERROR - Updating Comment"});
+    }
+};
+
+export const commentsDelete = async (req, res) => {
+    const {id} = req.params;
+
+    try{
+        const token = req.header("x-token");
+        if(!token){
+            return res.status(401).json({
+                msg: "There is NOT token in the request"
+            });
+        }
+        
+        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const usuario = await Usuario.findById(uid);
+        
+        if (!usuario) {
+            return res.status(401).json({ msg: "The User does NOT EXIST in the DB" });
+        }
+
+        const comment = await Comment.findByIdAndUpdate(id, {estado: false});
+        if(!comment){
+            return res.status(404).json({msg: "The Comment NOT FOUND"});
+        }
+
+        res.status(200).json({
+            msg: "Comment DELETED successfully", comment, usuario
+        });
+
+    }catch(error){
+        console.error("ERROR - Deleting Comment: ", error);
+        res.status(400).json({error: "ERROR - Deleting Comment"});
     }
 };
