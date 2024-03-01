@@ -18,14 +18,13 @@ export const existenteEmail = async (email = '') => {
 export const publicationExistsById = async (id) => {
     const publication = await Publications.findById(id);
     if (!publication) {
-        throw new Error(`The ID: ${title} Does not exist`);
+        throw new Error('The publication was not found');
     }
 };
 
-
 export const publicationBelongsToUser = async (publicationId, idUser) => {
-    const publication = await Publications.findOne({ _id: publicationId, createdBy: idUser });
+    const publication = await Publications.findOne({ _id: publicationId, idUser: idUser });
     if (!publication) {
-        throw new Error(`The ID: ${idUser} Does not exist`);
+        throw new Error('he publication does not belong to the user');
     }
 };
