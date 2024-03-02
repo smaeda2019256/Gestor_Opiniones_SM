@@ -1,0 +1,90 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Comments",
+    "dateExported": "2024-03-02T05:45:32.765Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "32722db5-b89b-4175-af4f-bfbc993e0b11",
+            "colId": "c373fc23-6031-4931-99d2-a4823e06cdac",
+            "containerId": "",
+            "name": "POST Comments",
+            "url": "localhost:3000/api/comment/65e2b86da963e2051f924f94",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-01T23:24:55.198Z",
+            "modified": "2024-03-02T05:33:01.078Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUxMjUwNDYwYzEwMTg5NzVmMDE3ODQiLCJpYXQiOjE3MDkzNTc1MzMsImV4cCI6MTcwOTM2MTEzM30.vTEZm2OQmOSOO92hyQB7uPyOnhFcmZfhEjoDZdVgz7Y"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"descriptionComment\": \"Comentario de PRUEBA DE Santiago\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "148e53e3-9cb9-42f7-9368-b2a631b944e1",
+            "colId": "c373fc23-6031-4931-99d2-a4823e06cdac",
+            "containerId": "",
+            "name": "GET Comments",
+            "url": "localhost:3000/api/comment",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-03-02T00:00:03.608Z",
+            "modified": "2024-03-02T00:00:18.260Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ca5460d2-70d4-46f2-8452-cb7bdf79052c",
+            "colId": "c373fc23-6031-4931-99d2-a4823e06cdac",
+            "containerId": "",
+            "name": "PUT Comments",
+            "url": "localhost:3000/api/comment/65e2b89ea963e2051f924f9a",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-03-02T00:01:45.557Z",
+            "modified": "2024-03-02T05:30:22.388Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUyYTRjYTI5MjNmMjk1YjM2M2UwODgiLCJpYXQiOjE3MDkzNTcwNTcsImV4cCI6MTcwOTM2MDY1N30.b2u_QjBWd4wnXQkhAPdViLzv3PwFKEGE5MAY3yj3IbE"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"descriptionComment\": \"COMENTARIO DE PRUEBA 2\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ba66f1c1-a03e-4898-94ea-97bfe175493f",
+            "colId": "c373fc23-6031-4931-99d2-a4823e06cdac",
+            "containerId": "",
+            "name": "DELETE Comments",
+            "url": "localhost:3000/api/comment/65e2b3d39b82c0869a700dc6",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-03-02T00:21:31.258Z",
+            "modified": "2024-03-02T05:08:07.357Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUxMjUwNDYwYzEwMTg5NzVmMDE3ODQiLCJpYXQiOjE3MDkzNTU3MDgsImV4cCI6MTcwOTM1OTMwOH0.2uoyzunPtwVr8bUN7988aMs6rEFtEuwqNZsNWeWhhE8"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
