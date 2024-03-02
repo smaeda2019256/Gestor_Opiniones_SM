@@ -6,6 +6,11 @@ const PublicationSchema = mongoose.Schema({
         ref: "User",
         required: [true, "The User is obligatory"],
     },
+    nameUser: {
+        type: String,
+        ref: "User",
+        required: [true, "The user's name is obligatory"],
+    },
     title: {
         type: String,
         required: [true, "The title is obligatory"],

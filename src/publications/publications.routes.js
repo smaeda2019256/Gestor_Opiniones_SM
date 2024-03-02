@@ -29,9 +29,9 @@ router.post('/', [
 ], createPublication);
 
 router.put('/:id', [
+    validarJWT,
     check('id', 'The entered ID is invalid').isMongoId(),
     check('id').custom(publicationExistsById),
-    validarJWT,
     validarCampos
 ], updatePublication);
 

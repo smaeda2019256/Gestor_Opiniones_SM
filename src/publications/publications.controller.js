@@ -1,23 +1,41 @@
 import { response, request } from "express";
 import Publication from './publications.model.js';
 import Usuario from '../users/user.model.js';
+import Comment from '../comments/comments.model.js';
 import jwt from "jsonwebtoken";
 
 export const getPublications = async (req = request, res = response) => {
-    const { limite, desde } = req.query;
-    const query = { estado: true };
-    const [total, publication] = await Promise.all([
-        Publication.countDocuments(query),
-        Publication.find(query)
+    try {
+        const {limite, desde} = req.query;
+        const query = {estado: true};
+
+        const publications = await Publication.find(query)
             .skip(Number(desde))
-            .limit(Number(limite))
+            .limit(Number(limite));
 
-    ]);
+        const publicactionWithComments = await Promise.all(
+            publications.map(async (publication) => {
+                const comments = await Comment.find({ idPublication: publication._id, estado: true})
+                    .select('id descriptionComment');
 
-    res.status(200).json({
-        total,
-        publication
-    });
+                return {
+                    ...publication._doc,
+                    comments,
+                };
+            })
+        );
+
+        const total = publications.length;
+
+        res.status(200).json({
+            total,
+            publications: publicactionWithComments,
+        });
+
+    }catch(error) {
+        console.error(error);
+        res.status(500).json({error: 'ERROR - Internal server error'})
+    }
 };
 
 export const createPublication = async (req, res) => {
@@ -29,7 +47,8 @@ export const createPublication = async (req, res) => {
             title,
             category,
             description,
-            idUser: user.name,
+            idUser: user.id,
+            nameUser: user.name,
         });
 
         await publication.save();
@@ -62,23 +81,28 @@ export const updatePublication = async (req, res) => {
     try {
         const token = req.header("x-token");
         if (!token) {
-            return res.status(401).json({ msg: "There is NO TOKEN in the request" });
+            return res.status(401).json({ msg: "No hay TOKEN en la solicitud" });
         }
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const usuario = await Usuario.findById(uid);
         if (!usuario) {
-            return res.status(401).json({ msg: 'User does NOT EXIST in the database' });
+            return res.status(401).json({ msg: 'El usuario NO EXISTE en la base de datos' });
+        }
+
+        const publication = await Publication.findById(id);
+        if (!publication || publication.idUser.toString() !== uid) {
+            return res.status(403).json({ msg: 'No tienes permiso para actualizar esta publicación' });
         }
 
         await Publication.findByIdAndUpdate(id, resto);
 
-        const publications = await Publication.findOne({ _id: id });
+        const updatedPublication = await Publication.findOne({ _id: id });
 
-        res.status(200).json({ msg: 'UPDATED Publication successfully', publications });
+        res.status(200).json({ msg: 'Publicación actualizada con éxito', publication: updatedPublication });
     } catch (error) {
-        console.error('ERROR - updating publication:', error);
-        res.status(500).json({ error: 'ERROR - updating publication' });
+        console.error('ERROR - actualizando la publicación:', error);
+        res.status(500).json({ error: 'ERROR - actualizando la publicación' });
     }
 };
 
@@ -89,23 +113,25 @@ export const publicationsDelete = async (req, res) => {
     try {
         const token = req.header("x-token");
         if (!token) {
-            return res.status(401).json({ msg: "There is NO TOKEN in the request" });
+            return res.status(401).json({ msg: "No hay TOKEN en la solicitud" });
         }
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const usuario = await Usuario.findById(uid);
         if (!usuario) {
-            return res.status(401).json({ msg: 'User does NOT EXIST in the database' });
+            return res.status(401).json({ msg: 'El usuario NO EXISTE en la base de datos' });
         }
 
-        const publication = await Publication.findByIdAndUpdate(id, { estado: false });
-        if (!publication) {
-            return res.status(404).json({ msg: 'Publication NOT FOUND' });
+        const publication = await Publication.findById(id);
+        if (!publication || publication.idUser.toString() !== uid) {
+            return res.status(403).json({ msg: 'No tienes permiso para eliminar esta publicación' });
         }
 
-        res.status(200).json({ msg: 'Publication DELETED successfully', publication, usuario });
+        await Publication.findByIdAndDelete(id);
+
+        res.status(200).json({ msg: 'Publicación eliminada con éxito' });
     } catch (error) {
-        console.error('Error deleting publication:', error);
-        res.status(500).json({ error: 'Error deleting publication' });
+        console.error('ERROR - eliminando la publicación:', error);
+        res.status(500).json({ error: 'ERROR - eliminando la publicación' });
     }
 };
