@@ -1,0 +1,24 @@
+[{
+  "_id": {
+    "$oid": "65e2b6e5a963e2051f924f81"
+  },
+  "idUser": "65e1250460c1018975f01784",
+  "nameUser": "Santiago Maeda",
+  "title": "Publicacion SM",
+  "category": "NOTICIA",
+  "description": "Publicacion 1",
+  "estado": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e2b86da963e2051f924f94"
+  },
+  "idUser": "65e2a4ca2923f295b363e088",
+  "nameUser": "Didier Estrada",
+  "title": "Publicacion 2",
+  "category": "MEME",
+  "description": "Publicacion 2",
+  "estado": true,
+  "__v": 0
+}]

@@ -1,0 +1,44 @@
+[{
+  "_id": {
+    "$oid": "65e2b73ea963e2051f924f8a"
+  },
+  "idUser": "65e1250460c1018975f01784",
+  "userName": "Santiago Maeda",
+  "idPublication": "65e2b6e5a963e2051f924f81",
+  "descriptionComment": "Comentario PRUEBA 1",
+  "estado": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e2b89ea963e2051f924f9a"
+  },
+  "idUser": "65e2a4ca2923f295b363e088",
+  "userName": "Didier Estrada",
+  "idPublication": "65e2b86da963e2051f924f94",
+  "descriptionComment": "COMENTARIO DE PRUEBA 2",
+  "estado": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e2b9b9a963e2051f924fbb"
+  },
+  "idUser": "65e2a4ca2923f295b363e088",
+  "userName": "Didier Estrada",
+  "idPublication": "65e2b6e5a963e2051f924f81",
+  "descriptionComment": "Comentario de PRUEBA DE Didier",
+  "estado": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e2ba0da963e2051f924fc4"
+  },
+  "idUser": "65e1250460c1018975f01784",
+  "userName": "Santiago Maeda",
+  "idPublication": "65e2b86da963e2051f924f94",
+  "descriptionComment": "Comentario de PRUEBA DE Santiago",
+  "estado": true,
+  "__v": 0
+}]

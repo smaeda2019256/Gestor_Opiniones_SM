@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "65e1250460c1018975f01784"
+  },
+  "name": "Santiago Maeda",
+  "email": "smaeda@gmail.com",
+  "password": "$2a$10$5PQdWpAFmv7QAsoDfXno.eyqABe37YzFTArljhP9dAUwacTXmc5Cm",
+  "estado": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e2a4ca2923f295b363e088"
+  },
+  "name": "Didier Estrada",
+  "email": "destrada@gmail.com",
+  "password": "$2a$10$.949U9m4HXoQGvk8JIpMp.llOuh/OcyVvNNhA8jMC0/AY4mh0ofl.",
+  "estado": true,
+  "__v": 0
+}]
