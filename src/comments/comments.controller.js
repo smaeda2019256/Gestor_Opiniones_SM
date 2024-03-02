@@ -57,25 +57,25 @@ export const commentsPut = async (req, res = response) => {
     try {
         const token = req.header("x-token");
         if (!token) {
-            return res.status(401).json({ msg: "No hay TOKEN en la solicitud" });
+            return res.status(401).json({ msg: "No TOKEN in the application" });
         }
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const usuario = await Usuario.findById(uid);
         if (!usuario) {
-            return res.status(401).json({ msg: 'El usuario NO EXISTE en la base de datos' });
+            return res.status(401).json({ msg: 'The user DOES NOT EXIST in the database.' });
         }
 
         const comment = await Comment.findById(id);
         if (!comment || comment.idUser.toString() !== uid) {
-            return res.status(403).json({ msg: 'No tienes permiso para actualizar este comentario' });
+            return res.status(403).json({ msg: 'You do not have permission to update this comment' });
         }
 
         await Comment.findByIdAndUpdate(id, resto);
 
         const updatedComment = await Comment.findOne({ _id: id });
 
-        res.status(200).json({ msg: 'Comentario actualizado con éxito', comment: updatedComment });
+        res.status(200).json({ msg: 'Comment successfully updated', comment: updatedComment });
     } catch (error) {
         console.error('ERROR - Actualizando el comentario:', error);
         res.status(500).json({ error: 'ERROR - Actualizando el comentario' });
