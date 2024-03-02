@@ -53,19 +53,20 @@ export const commentsPut = async (req, res = response) => {
     const {id} = req.params;
     const {_id, ...resto} = req.body;
 
-    try {
+    try{
         const token = req.header("x-token");
         if(!token){
             return res.status(401).json({
-                msg: "There is NOT token in the request"});
+                msg: "There is NOT token in the request"
+            });
         }
-        
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-        const usuario =  await Usuario.findById(uid);
+        const usuario = await Usuario.findById(uid);
         
-        if(!usuario){
-            return res.status(401).json({
-                msg: "The User does NOT EXIST in the DB"});
+        if (!usuario) {
+            return res.status(401).json({ 
+                msg: "The User does NOT EXIST in the DB" 
+            });
         }
 
         const comment = await Comment.findById(id);
