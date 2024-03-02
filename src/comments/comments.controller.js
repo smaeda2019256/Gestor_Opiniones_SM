@@ -16,7 +16,7 @@ export const commentsPost = async (req, res) => {
 
         const comment = new Comment({
             descriptionComment,
-            idUser: user.email,
+            idUser: user.id,
             userName: user.name,
             idPublication: req.idPublication, 
         });
@@ -51,56 +51,44 @@ export const commentsGet = async (req = request, res = response) => {
 };
 
 export const commentsPut = async (req, res = response) => {
-    const {id} = req.params;
-    const {_id, ...resto} = req.body;
+    const { id } = req.params;
+    const { _id, ...resto } = req.body;
 
-    try{
+    try {
         const token = req.header("x-token");
-        if(!token){
-            return res.status(401).json({
-                msg: "There is NOT token in the request"
-            });
+        if (!token) {
+            return res.status(401).json({ msg: "No hay TOKEN en la solicitud" });
         }
+
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
         const usuario = await Usuario.findById(uid);
-        
         if (!usuario) {
-            return res.status(401).json({ 
-                msg: "The User does NOT EXIST in the DB" 
-            });
+            return res.status(401).json({ msg: 'El usuario NO EXISTE en la base de datos' });
         }
 
         const comment = await Comment.findById(id);
-        if(!comment){
-            return res.status(404).json({
-                msg: "The Comment NOT FOUND"
-            });
+        if (!comment || comment.idUser.toString() !== uid) {
+            return res.status(403).json({ msg: 'No tienes permiso para actualizar este comentario' });
         }
 
         await Comment.findByIdAndUpdate(id, resto);
 
-        const updatedComment = await Comment.findOne({_id: id});
+        const updatedComment = await Comment.findOne({ _id: id });
 
-        res.status(200).json({
-            msg: "The Comment UPDATED successfully",
-            comment: updatedComment
-        });
-
-    }catch(error){
-        console.error("ERROR - Updating Comment: ", error);
-        res.status(400).json({error: "ERROR - Updating Comment"});
+        res.status(200).json({ msg: 'Comentario actualizado con éxito', comment: updatedComment });
+    } catch (error) {
+        console.error('ERROR - Actualizando el comentario:', error);
+        res.status(500).json({ error: 'ERROR - Actualizando el comentario' });
     }
 };
 
 export const commentsDelete = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
-    try{
+    try {
         const token = req.header("x-token");
-        if(!token){
-            return res.status(401).json({
-                msg: "There is NOT token in the request"
-            });
+        if (!token) {
+            return res.status(401).json({ msg: "There is NOT token in the request" });
         }
         
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
@@ -110,17 +98,22 @@ export const commentsDelete = async (req, res) => {
             return res.status(401).json({ msg: "The User does NOT EXIST in the DB" });
         }
 
-        const comment = await Comment.findByIdAndUpdate(id, {estado: false});
-        if(!comment){
-            return res.status(404).json({msg: "The Comment NOT FOUND"});
+        const comment = await Comment.findById(id);
+        if (!comment) {
+            return res.status(404).json({ msg: "The Comment NOT FOUND" });
         }
 
-        res.status(200).json({
-            msg: "Comment DELETED successfully", comment, usuario
-        });
+        if (comment.idUser.toString() !== uid) {
+            return res.status(403).json({ msg: "You do NOT have permission to delete this comment" });
+        }
 
-    }catch(error){
+        comment.estado = false;
+        await comment.save();
+
+        res.status(200).json({ msg: "Comment DELETED successfully", comment, usuario });
+
+    } catch (error) {
         console.error("ERROR - Deleting Comment: ", error);
-        res.status(400).json({error: "ERROR - Deleting Comment"});
+        res.status(400).json({ error: "ERROR - Deleting Comment" });
     }
 };
