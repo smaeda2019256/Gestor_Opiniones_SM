@@ -17,6 +17,7 @@ export const commentsPost = async (req, res) => {
         const comment = new Comment({
             descriptionComment,
             idUser: user.email,
+            userName: user.name,
             idPublication: req.idPublication, 
         });
 

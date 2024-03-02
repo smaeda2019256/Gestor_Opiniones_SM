@@ -7,6 +7,11 @@ const CommentsSchema = mongoose.Schema({
         ref: "User",
         required: [true, "The User is obligatory"],
     },
+    userName: {
+        type: String,
+        ref: "User",
+        required: [true, "The user name is obligatory"],
+    },
     idPublication: {
         type: String,
         ref: "Publications",
